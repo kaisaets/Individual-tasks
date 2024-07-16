@@ -1,0 +1,252 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPasx1TKTUITdVB7G/PgSKY",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/kaisaets/Individual-tasks/blob/main/Python%20150624\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "fj9SJrVWpFZX",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "5d44a5b0-0c75-49a5-b743-0baf054e5eb4"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "We have 3 clients in our bank\n",
+            "Anna (id: 123456) has the following accounts:\n",
+            "  Account number: EE12098320489, Currency: EUR, Balance: 1990\n",
+            "  Account number: JP582147859635, Currency: JPY, Balance: 25000\n",
+            "  Account number: US654987643214, Currency: USD, Balance: 0.0\n",
+            "Oskar (id: 126786) has the following accounts:\n",
+            "  Account number: PL38098320204, Currency: PLN, Balance: 47800\n",
+            "Jennifer (id: 875456) has the following accounts:\n",
+            "  Account number: SE89429257042, Currency: SEK, Balance: 200\n"
+          ]
+        }
+      ],
+      "source": [
+        "import datetime\n",
+        "import json\n",
+        "class Client:\n",
+        "    number_of_clients = 0\n",
+        "\n",
+        "    def __init__(self, id, name):\n",
+        "        self.id = id\n",
+        "        self.name = name\n",
+        "        self.accounts = []\n",
+        "        Client.number_of_clients += 1\n",
+        "\n",
+        "    def add_account(self, account):\n",
+        "        self.accounts.append(account)\n",
+        "\n",
+        "class Account:\n",
+        "    def __init__(self, number, currency, balance = 0.0):\n",
+        "        self.number = number\n",
+        "        self.currency = currency\n",
+        "        self.balance = balance\n",
+        "        self.transactions = []\n",
+        "\n",
+        "    def make_deposit(self, amount, note):\n",
+        "        self.transactions.append(Transaction(self.currency, amount, note))\n",
+        "        self.balance += amount\n",
+        "\n",
+        "    def make_withdrawal(self, amount, note):\n",
+        "        self.transactions.append(Transaction(self.currency, -amount, note))\n",
+        "        self.balance -= amount\n",
+        "\n",
+        "class Transaction:\n",
+        "    def __init__(self, currency, amount, note, time_stamp = datetime.datetime.now()):\n",
+        "        self.currency = currency\n",
+        "        self.amount = amount\n",
+        "        self.note = note\n",
+        "        self.time_stamp = time_stamp\n",
+        "\n",
+        "clients = []\n",
+        "clients.append(Client('123456', 'Anna'))\n",
+        "clients.append(Client('126786', 'Oskar'))\n",
+        "clients.append(Client('875456', 'Jennifer'))\n",
+        "\n",
+        "clients[0].add_account(Account('EE12098320489', 'EUR', 1000))\n",
+        "clients[0].add_account(Account('JP582147859635', 'JPY', 25000))\n",
+        "clients[0].add_account(Account('US654987643214', 'USD'))\n",
+        "clients[1].add_account(Account('PL38098320204', 'PLN', 47800))\n",
+        "clients[2].add_account(Account('SE89429257042', 'SEK', 200))\n",
+        "clients[0].accounts[0].make_deposit(1200, 'Salary')\n",
+        "clients[0].accounts[0].make_withdrawal(50, 'Grocery')\n",
+        "clients[0].accounts[0].make_withdrawal(140, 'Clothes')\n",
+        "clients[0].accounts[0].make_withdrawal(20,'Dinner')\n",
+        "\n",
+        "\n",
+        "print(f'We have {Client.number_of_clients} clients in our bank')\n",
+        "for client in clients:\n",
+        "    print(f'{client.name} (id: {client.id}) has the following accounts:')\n",
+        "    for account in client.accounts:\n",
+        "        print(f'  Account number: {account.number}, Currency: {account.currency}, Balance: {account.balance}')\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "# Define student_details dictionary\n",
+        "student_details ={\n",
+        "    \"name\" : \"sathiyajith\",\n",
+        "    \"rollno\" : 56,\n",
+        "    \"cgpa\" : 8.6,\n",
+        "    \"phonenumber\" : \"9976770500\"\n",
+        "}\n",
+        "\n",
+        "# Convert and write JSON object to file\n",
+        "with open(\"sample.json\", \"w\") as outfile:\n",
+        "    json.dump(student_details, outfile)"
+      ],
+      "metadata": {
+        "id": "ZaAFDY-i9yTh"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import json\n",
+        "with open('clients_data.json') as json_file:\n",
+        "    data = json.load(json_file)\n",
+        "\n",
+        "for client in data:\n",
+        "    print(f'{client[\"name\"]}')"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 222
+        },
+        "id": "nl1_fmnIB_Fs",
+        "outputId": "04a8c57d-bbce-4e6f-9ffe-d39d958091a9"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "FileNotFoundError",
+          "evalue": "[Errno 2] No such file or directory: 'clients_data.json'",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mFileNotFoundError\u001b[0m                         Traceback (most recent call last)",
+            "\u001b[0;32m<ipython-input-7-de144cc5fb2f>\u001b[0m in \u001b[0;36m<cell line: 2>\u001b[0;34m()\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mjson\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 2\u001b[0;31m \u001b[0;32mwith\u001b[0m \u001b[0mopen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'clients_data.json'\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mjson_file\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      3\u001b[0m     \u001b[0mdata\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mjson\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mload\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mjson_file\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      4\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0mclient\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mdata\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mFileNotFoundError\u001b[0m: [Errno 2] No such file or directory: 'clients_data.json'"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "CSV - Comma Separated Values\n",
+        "id,     name, accounts\n",
+        "123456, anna, \"[098432, 802423, 205782]\"\n",
+        "839658, oskar, \"[1095728]\"\n",
+        "239209, jenifer, \"[025892]\"\n",
+        "\n",
+        "id, name, surname, salary\n",
+        "123456, Anna, Johnson, 8000\n",
+        "234567, Oskar, Smith, 2000"
+      ],
+      "metadata": {
+        "id": "1QMc008crDbC"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "JSON - Java Script Object Notation\n",
+        "{\n",
+        "    \"clients\" : [\n",
+        "        {},\n",
+        "        {},\n",
+        "        {}\n",
+        "        ]\n",
+        "{\n",
+        "    \"id\" : \"123456\",\n",
+        "    \"name\" : \"Anna\",\n",
+        "    \"accounts\" : [\n",
+        "      {\n",
+        "      \"number\": \"EE079iohoih\",\n",
+        "      \"currency\": \"EUR\",\n",
+        "      \"balance\": 1000.00\n",
+        "    },\n",
+        "    {\n",
+        "      \"number\": \"EC7780-oih\",\n",
+        "      \"currency\": \"EUR\",\n",
+        "      \"balance\": 20.01\n",
+        "    },\n",
+        "    {\n",
+        "      \"number\": \"US654987643214\",\n",
+        "      \"currency\": \"USD\",\n",
+        "      \"balance\": 0.00\n",
+        "    }\n",
+        "  \n",
+        "    ]\n",
+        "\n",
+        "},\n",
+        "        {\n",
+        "            \"id\": \"987654\",\n",
+        "            \"name\": \"Oskar\",\n",
+        "            \"accounts\": [\n",
+        "                {\n",
+        "                    \"accountNumber\": \"PL849512635445\",\n",
+        "                    \"currency\": \"PLN\",\n",
+        "                    \"balance\": 47800.0\n",
+        "                }\n",
+        "            ]\n",
+        "        },\n",
+        "        {\n",
+        "            \"id\": \"456123\",\n",
+        "            \"name\": \"Jenifer\",\n",
+        "            \"accounts\": [\n",
+        "                {\n",
+        "                    \"accountNumber\": \"SE741254956587\",\n",
+        "                    \"currency\": \"SEK\",\n",
+        "                    \"balance\": 200.18\n",
+        "                }\n",
+        "            ]\n",
+        "        }\n",
+        "    ]\n",
+        "}"
+      ],
+      "metadata": {
+        "id": "o9URRqq5xPPh"
+      }
+    }
+  ]
+}
