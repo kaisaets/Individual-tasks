@@ -1,0 +1,219 @@
+Main.java
+```Java
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class Main {
+  private static Scanner scanner = new Scanner(System.in);
+  private static CheeseService cheeseService = new CheeseService();
+  private static CheeseShop cheeseShop = new CheeseShop();
+  
+  public static void main(String[] args) {
+    while(true){
+    System.out.println("Welcome to CheeeseShop!");
+    System.out.println("Press 1 if you are shop's manager");
+    System.out.println("Press 2 if you are a customer");
+    System.out.println("Press 3 if you want to exit the store");
+    int action = scanner.nextInt();
+    scanner.nextLine();
+    if(action == 1){
+       managerMenu();
+    }else if (action == 2){
+    customerMenu();
+   }else {
+      System.out.println("You have exited the store");
+     break;
+   }
+    }
+  }
+  public static void addCheese(){
+    System.out.println("Add the ID of the cheese: ");
+    int id = scanner.nextInt();
+    scanner.nextLine();
+    System.out.println("Add the type of the cheese: ");
+    String type = scanner.next();
+    System.out.println("Add the price of the cheese: ");
+    int price = scanner.nextInt();
+    scanner.nextLine();
+    var cheese = new Cheese(id, type, price);
+    cheeseService.addCheese(cheese);
+  }
+  public static void printCheeses(){
+    System.out.println("These are the cheeses in storage");
+    var cheeses = cheeseService.getCheeses();
+    for (var cheese : cheeses){
+      System.out.println(cheese.getId() +" "+ cheese.getType()+ " " + cheese.getPrice());
+    }
+  }
+ public static void removeCheese(){
+   System.out.println("Provide the cheese's ID: ");
+   int id = scanner.nextInt();
+   scanner.nextLine();
+   cheeseService.removeCheese(id);
+ }
+  public static void addCheeseToCart(){
+    System.out.println("What type of cheese would you like to buy?");
+    String type = scanner.nextLine();
+    ArrayList<Cheese> cheeses = cheeseService.getCheeses();
+    for (Cheese cheese : cheeses){
+      if (cheese.getType().equals(type)){
+        cheeseShop.addCheeseToCart(cheese);
+      }
+    }
+  }
+  public static void removeCheeseFromCart(){
+    System.out.println("What type of cheese would you like to remove from cart?");
+    String type = scanner.nextLine();
+    ArrayList<Cheese> cheeses = cheeseService.getCheeses();
+    for (Cheese cheese : cheeses){
+      if (cheese.getType().equals(type)){
+        cheeseShop.removeCheeseFromCart(cheese);
+        System.out.println(cheese.getType() + " is removed from your cart");
+        return;
+      }
+    }
+  }
+  
+  public static void printCart(){
+    System.out.println("There are the items in your cart: ");
+    ArrayList<Cheese> cart = cheeseShop.getCart();
+    for (Cheese cheese : cart){
+      System.out.println("ID: " + cheese.getId() + " ; type: " + cheese.getType() + " ; price: "+ cheese.getPrice());
+    }
+  }
+  public static int checkout(){
+    return cheeseShop.checkout();
+  }
+  public static void managerMenu() {
+    while (true) {
+      System.out.println("Welcome, Manager!");
+      System.out.println("Enter 1 to add a cheese to the store");
+      System.out.println("Enter 2 to print the list of cheeses");
+      System.out.println("Enter 3 to remove a cheese from the store");
+      System.out.println("Enter 4 to exit");
+      int userInput = scanner.nextInt();
+      scanner.nextLine();
+      if (userInput == 1) {
+        addCheese();
+      } else if (userInput == 2) {
+        printCheeses();
+      } else if (userInput == 3) {
+        removeCheese();
+      } else if (userInput == 4) {
+      
+        System.out.println("You have exited the manager's menu");
+        break;
+      }         
+    }
+  }
+    public static void customerMenu() {
+      while (true) {
+        System.out.println("Welcome to the Shop!");
+        System.out.println("Enter 1 to add a cheese to your cart");
+        System.out.println("Enter 2 to see the cheeses in your cart");
+        System.out.println("Enter 3 to remove a cheese from your cart");
+        System.out.println("Enter 4 for checkout");
+        System.out.println("Enter 5 to exit the store");
+        int userInput = scanner.nextInt();
+        scanner.nextLine();
+        if (userInput == 1) {
+            addCheeseToCart();
+        } else if (userInput == 2) {
+            printCart();
+        } else if (userInput == 3) {
+            removeCheeseFromCart();
+        } else if (userInput == 4) {
+            System.out.println("Your total is: " + checkout());
+        } else {
+            System.out.println("You have exited the shop");
+            break;
+        }         
+      }
+    }
+}
+```
+Cheese.java
+```Java
+public class Cheese{
+  private int id;
+  private String type;
+  private int price;
+
+
+public Cheese(int id, String type, int price){
+  this.id = id;
+  this.type = type;
+  this.price = price;
+}
+  public int getId(){
+    return id;
+  }
+  public void setType(String type){
+    this.type = type;
+  }
+  public String getType(){
+    return type;
+  }
+  public void setPrice(int price){
+    this.price = price;
+  }
+  public int getPrice(){
+    return price;
+  }
+}
+```
+CheeseShop.java
+```Java
+import java.util.ArrayList;
+public class CheeseShop{
+  private ArrayList<Cheese> cart = new ArrayList<Cheese>();
+
+  public ArrayList<Cheese> getCart(){
+    return cart;
+  }
+  public void addCheeseToCart (Cheese cheese){
+    cart.add(cheese);
+  }
+  public void removeCheeseFromCart (Cheese cheese){
+  cart.remove(cheese);
+}
+  public int checkout(){
+    int sum = 0;
+    for(var cheese : cart){
+      sum += cheese.getPrice();
+    }
+    return sum;
+  }
+}
+```
+CheeseService.java
+```Java
+import java.util.ArrayList;
+public class CheeseService{
+private ArrayList<Cheese> cheeses = new ArrayList<Cheese>();
+
+public ArrayList<Cheese> getCheeses(){
+  return cheeses;
+}
+public void addCheese(Cheese cheese){
+  cheeses.add(cheese);
+}
+public void removeCheese(int id){
+  for (var cheese : cheeses){
+    if (cheese.getId() == id){
+      cheeses.remove(cheese);
+      return;
+    }
+  }
+}
+  public void updateCheese(int id, String type, int price){
+   for (var cheese : cheeses){
+     if(cheese.getId() == id){
+       cheese.setType(type);
+        cheese.setPrice(price);
+       return;
+     }
+   } 
+  }
+}
+```
