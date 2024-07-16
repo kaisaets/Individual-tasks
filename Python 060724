@@ -1,0 +1,220 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPxeILeLFmYdQ6wkKgDgXh1",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/kaisaets/Individual-tasks/blob/main/Python%20060724\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Easy Level\n",
+        "In this level, you will compute the total price of all items, and count the total number of purchased items.\n",
+        "\n",
+        "Medium Level\n",
+        "In this level, we will extend the program to skip rows that contain anything other than a number in the code. (Modify your program in such a way that all rows that contain something else than a number, are skipped.)"
+      ],
+      "metadata": {
+        "id": "plEJInagkDrd"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "filename = '/content/prices.txt' #location\n",
+        "\n",
+        "with open(filename, 'r') as file:\n",
+        "    content = file.read()\n",
+        "\n",
+        "print(content)\n",
+        "\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "LbqlQh4OkGBe",
+        "outputId": "1e48da2a-d4ec-4762-b8ae-8e8fc359ab87"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "3.25\n",
+            "you_are_amazing\n",
+            "1.56\n",
+            "3\n",
+            "you_can_do_it\n",
+            "8.99\n",
+            "0.52\n",
+            "just_for_fun\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "filename = '/content/prices.txt'\n",
+        "with open (filename, 'r') as file:\n",
+        "    content = file.readlines()\n",
+        "\n",
+        "print(content)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "viQ0u9nosG01",
+        "outputId": "af3ce6cd-7f77-4a9b-cfac-24d07f97dab2"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "['3.25\\n', 'you_are_amazing\\n', '1.56\\n', '3\\n', 'you_can_do_it\\n', '8.99\\n', '0.52\\n', 'just_for_fun\\n']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "for line in content:\n",
+        "    print(line, end = '')"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "I1ycfuVnsR9y",
+        "outputId": "9af06f03-c311-4ed0-ccfa-9000e76e06ed"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "3.25\n",
+            "you_are_amazing\n",
+            "1.56\n",
+            "3\n",
+            "you_can_do_it\n",
+            "8.99\n",
+            "0.52\n",
+            "just_for_fun\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "with open ('/content/prices.txt', 'r') as file:\n",
+        "    prices = file.readlines()\n",
+        "\n",
+        "for pricelist in prices:\n",
+        "    print(pricelist)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "xmzoYB3oqeAC",
+        "outputId": "df3fb2f6-61df-47a9-86a6-68de8dbd0adc"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "3.25\n",
+            "\n",
+            "you_are_amazing\n",
+            "\n",
+            "1.56\n",
+            "\n",
+            "3\n",
+            "\n",
+            "you_can_do_it\n",
+            "\n",
+            "8.99\n",
+            "\n",
+            "0.52\n",
+            "\n",
+            "just_for_fun\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "total_sum = 0\n",
+        "count = 0\n",
+        "for pricelist in prices:\n",
+        "    try:\n",
+        "        total_sum += float(pricelist.strip())\n",
+        "        count += 1\n",
+        "    except ValueError:\n",
+        "         print(f\"Skipping invalid entry: {pricelist}\")\n",
+        "\n",
+        "print(f'The total sum is {total_sum}')\n",
+        "print(f'The amount of purchased items is {count}')"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "LY43xPB4qhC0",
+        "outputId": "20cc9c8f-1be1-4f9a-bbf0-5c62a4b7bf19"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Skipping invalid entry: you_are_amazing\n",
+            "\n",
+            "Skipping invalid entry: you_can_do_it\n",
+            "\n",
+            "Skipping invalid entry: just_for_fun\n",
+            "\n",
+            "The total sum is 17.32\n",
+            "The amount of purchased items is 5\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
