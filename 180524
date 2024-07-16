@@ -1,0 +1,122 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/kaisaets/Individual-tasks/blob/main/180524\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "LdwZjsulIc-l"
+      },
+      "source": [
+        "### Hard Level\n",
+        "**Instructions:**\n",
+        "1. Add bank withdrawal (if user wants to withdraw money the balance decreases)\n",
+        "2. If the balance becomes negative, withdrawal is not possible.\n",
+        "3. Add check balance optionality\n",
+        "Example for hard level:\n",
+        "   print(\"\\nWhat would you like to do?\")\n",
+        "   print(\"1. Deposit money\")\n",
+        "   print(\"2. Withdraw money\")\n",
+        "   print(\"3. Check balance\")\n",
+        "   print(\"4. Exit\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "P4jetXTSIbnK",
+        "outputId": "3adb1214-df00-4c23-bd83-98c42c153f90"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Hello! Welcome to YourBank!\n",
+            "What would you like to do? \n",
+            " Enter \"1\" to deposit money. \n",
+            " Enter \"2\" to withdraw money. \n",
+            " Enter \"3\" to check balance. \n",
+            " Enter \"4\" to exit.3\n",
+            "Your current balance is 0.0€\n",
+            "What would you like to do? \n",
+            " Enter \"1\" to deposit money. \n",
+            " Enter \"2\" to withdraw money. \n",
+            " Enter \"3\" to check balance. \n",
+            " Enter \"4\" to exit.4\n",
+            "You have been signed out successfully!\n"
+          ]
+        }
+      ],
+      "source": [
+        "print('Hello! Welcome to YourBank!')\n",
+        "your_balance = 0.00\n",
+        "while True:\n",
+        "    menu = int(input('What would you like to do? \\n Enter \"1\" to deposit money. \\n Enter \"2\" to withdraw money. \\n Enter \"3\" to check balance. \\n Enter \"4\" to exit.'))\n",
+        "    if menu == 1:\n",
+        "        try:\n",
+        "            deposit = float(input('How much money would you like to deposit?: '))\n",
+        "            your_balance += deposit\n",
+        "            print(f'Your new balance is {your_balance}€')\n",
+        "        except:\n",
+        "            print(\"Wrong value(s) entered. Please enter numbers from 0 to 9 and use . for decimals e.g. 12.34\")\n",
+        "        else:\n",
+        "            another_deposit = input('Would you like to make another deposit? (yes/no)').strip().lower()\n",
+        "        if another_deposit == 'no':\n",
+        "            print(f'Your final balance is {your_balance}€. You have been signed out successfully!')\n",
+        "            break\n",
+        "\n",
+        "    if menu == 2:\n",
+        "        try:\n",
+        "            withdraw = float(input(f\"Your current balance is {your_balance}€. How much money would you like to withdraw?: \"))\n",
+        "\n",
+        "            if (your_balance - withdraw) < 0:\n",
+        "                print(\"You don't have enough funds in your account\")\n",
+        "\n",
+        "            else:\n",
+        "                print(f\"You have withrawn {withdraw}€. Please take your money from the slot.\")\n",
+        "\n",
+        "        except:\n",
+        "            print(\"Wrong value(s) entered. Please enter numbers from 0 to 9 and use . for decimals e.g. 12.34\")\n",
+        "\n",
+        "\n",
+        "    if menu == 3:\n",
+        "       print(f'Your current balance is {your_balance}€')\n",
+        "\n",
+        "    if menu == 4:\n",
+        "        print('You have been signed out successfully!')\n",
+        "        break\n",
+        "\n",
+        "\n"
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPgEMXNYtVQvybSZY83Mobs",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
